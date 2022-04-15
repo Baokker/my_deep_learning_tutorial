@@ -25,9 +25,10 @@ class Classifier(nn.Module):
         x = self.dropout(F.relu(self.fc1(x)))
         x = self.dropout(F.relu(self.fc2(x)))
         x = self.dropout(F.relu(self.fc3(x)))
+        x = self.dropout(F.relu(self.fc4(x)))
 
         # 在输出单元不需要使用Dropout方法
-        x = F.log_softmax(self.fc4(x), dim=1)
+        x = F.log_softmax(self.fc5(x), dim=1)
 
         return x
 
@@ -57,7 +58,7 @@ if __name__ == '__main__':
     epochs = 10
 
     # 将每次训练的训练误差和测试误差存储在这两个列表里，后面绘制误差变化折线图用
-    train_losses, test_losses = [], []
+    # train_losses, test_losses = [], []
 
     print('开始训练')
     for e in range(epochs):
@@ -98,21 +99,21 @@ if __name__ == '__main__':
             # 恢复Dropout
             model.train()
             # 将训练误差和测试误差存在两个列表里，后面绘制误差变化折线图用
-            train_losses.append(running_loss / len(trainloader))
-            test_losses.append(test_loss / len(testloader))
+            # train_losses.append(running_loss / len(trainloader))
+            # test_losses.append(test_loss / len(testloader))
 
             print("训练集学习次数: {}/{}.. ".format(e + 1, epochs),
                   "训练误差: {:.3f}.. ".format(running_loss / len(trainloader)),
                   "测试误差: {:.3f}.. ".format(test_loss / len(testloader)),
                   "模型分类准确率: {:.3f}".format(accuracy / len(testloader)))
 
-            import matplotlib.pyplot as plt
-            plt.plot(train_losses, label='Training loss')
-            plt.plot(test_losses, label='Validation loss')
-            plt.legend()
+            # import matplotlib.pyplot as plt
+            # plt.plot(train_losses, label='Training loss')
+            # plt.plot(test_losses, label='Validation loss')
+            # plt.legend()
 
-            model.eval()
-            dataiter = iter(testloader)
+    model.eval()
+    dataiter = iter(testloader)
 
     # Testing 10 samples after training
     for i in range(10):
