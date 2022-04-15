@@ -54,7 +54,7 @@ if __name__ == '__main__':
     optimizer = optim.Adam(model.parameters(), lr=0.003)
 
     # 对训练集的全部数据学习10遍
-    epochs = 10
+    epochs = 16
 
     # 将每次训练的训练误差和测试误差存储在这两个列表里，后面绘制误差变化折线图用
     train_losses, test_losses = [], []
